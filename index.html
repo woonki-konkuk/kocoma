@@ -1,0 +1,847 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2026년도 한국기업경영학회 춘계 이사회</title>
+<link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<style>
+:root{
+  --navy:#16276B;
+  --navy-deep:#0E1A4A;
+  --gold:#B8922E;
+  --ink:#1B1F2E;
+  --gray:#6B7185;
+  --line:#E3E6EE;
+  --bg:#FFFFFF;
+  --bg-soft:#F6F7FA;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html,body{height:100%}
+/* 글자 크기를 무대(16:9) 폭에 비례시킴 → 빔/노트북 어디서나 같은 비율 유지.
+   무대 폭이 클수록(빔·큰 스크린) 글자도 함께 커지고, 하한 13px·상한 30px로 극단 방지. */
+html{font-size:clamp(13px, calc(min(96vw, 96vh * 1.3333) / 60), 32px);}
+body{
+  font-family:"Pretendard Variable",Pretendard,-apple-system,BlinkMacSystemFont,"Malgun Gothic","Apple SD Gothic Neo",sans-serif;
+  background:#EDEFF4;color:var(--ink);
+  display:flex;align-items:center;justify-content:center;
+  overflow:hidden;
+}
+/* ---------- 무대 ---------- */
+#stage{
+  position:relative;
+  width:min(96vw, calc(96vh * 4 / 3));
+  aspect-ratio:4/3;
+  background:var(--bg);
+  box-shadow:0 12px 48px rgba(14,26,74,.18);
+  border-radius:10px;
+  overflow:hidden;
+}
+/* ---------- 전체화면(Fullscreen API) ---------- */
+#stage:fullscreen,#stage:-webkit-full-screen{
+  width:100vw;height:100vh;max-width:none;
+  aspect-ratio:auto;border-radius:0;box-shadow:none;background:#000;
+  display:flex;align-items:center;justify-content:center;
+  font-size:clamp(13px, calc(min(100vw, 100vh * 1.3333) / 60), 36px);
+}
+/* 전체화면에선 슬라이드를 화면 한가운데 16:9로 최대화 (PPT 발표 화면과 동일) */
+#stage:fullscreen .slide,#stage:-webkit-full-screen .slide{
+  position:relative;inset:auto;margin:auto;
+  width:min(100vw, calc(100vh * 4 / 3));
+  height:min(100vh, calc(100vw * 3 / 4));
+}
+.slide{
+  position:absolute;inset:0;
+  padding:4.2% 5.5% 6.5% 5.5%;
+  display:none;
+  flex-direction:column;
+  overflow-y:auto;
+  background:var(--bg);
+}
+.slide.active{display:flex;animation:fadein .35s ease}
+@keyframes fadein{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.slide.active{animation:none}}
+
+/* ---------- 안건 레일 (시그니처) ---------- */
+.rail{
+  position:absolute;top:0;right:0;bottom:0;width:2.6rem;
+  background:var(--bg-soft);border-left:1px solid var(--line);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1.1rem;
+  z-index:5;
+}
+.rail span{
+  font-size:.72rem;font-weight:600;color:#B9BFCF;
+  writing-mode:horizontal-tb;line-height:1;cursor:pointer;
+  padding:.25rem;border-radius:4px;
+}
+.rail span.on{color:var(--navy);font-weight:800;position:relative}
+.rail span.on::after{content:"";position:absolute;left:50%;transform:translateX(-50%);bottom:-.45rem;width:4px;height:4px;border-radius:50%;background:var(--gold)}
+.has-rail{padding-right:calc(5.5% + 2.6rem)}
+
+/* ---------- 공통 타이포 ---------- */
+.eyebrow{display:none}
+h2.title{
+  font-size:1.85rem;font-weight:800;color:var(--navy);letter-spacing:-.02em;
+  padding-bottom:.7rem;margin:.3rem 0 1.2rem;border-bottom:2px solid var(--navy);
+  display:flex;align-items:baseline;gap:.7rem;
+}
+/* 차분한 정보 박스 (강조 없음) */
+.info-row{display:grid;grid-template-columns:1fr 1.35fr 1.7fr;border:1px solid var(--line);border-radius:6px;overflow:hidden}
+.info{padding:.7rem .95rem;border-right:1px solid var(--line)}
+.info:last-child{border-right:none}
+.info .k{font-size:.78rem;color:var(--gray);margin-bottom:.28rem}
+.info .v{font-size:.92rem;color:var(--ink);line-height:1.5;font-weight:600}
+.info .v .sub-muted{color:var(--gray);font-size:.85rem;font-weight:500}
+/* 학술세션 분과 칩 */
+.session-chips{display:grid;grid-template-columns:repeat(3,1fr);gap:.4rem;max-width:48rem}
+.schip{display:inline-flex;align-items:baseline;gap:.4rem;border:1px solid var(--line);border-radius:5px;padding:.24rem .6rem;font-size:.8rem;background:#fff;white-space:nowrap}
+.schip .rm{margin-left:auto;color:var(--gold);font-weight:700}
+h2.title small{font-size:.95rem;font-weight:500;color:var(--gray);letter-spacing:0}
+h3.sub{font-size:1.05rem;font-weight:700;color:var(--ink);margin:1.1rem 0 .5rem}
+h3.sub::before{content:"";display:inline-block;width:.55rem;height:.55rem;background:var(--navy);margin-right:.5rem;transform:translateY(-1px)}
+p,li{font-size:.95rem;line-height:1.6}
+.note{font-size:.8rem;color:var(--gray);margin-top:.5rem}
+ul.plain{list-style:none}
+ul.plain li{padding-left:1rem;position:relative;margin-bottom:.3rem}
+ul.plain li::before{content:"·";position:absolute;left:.2rem;color:var(--gold);font-weight:800}
+
+/* ---------- 임원 구성 로스터 ---------- */
+.roster .rgrp{margin-bottom:.85rem}
+.roster .rgrp:last-child{margin-bottom:0}
+.roster .rh{display:flex;align-items:baseline;gap:.5rem;border-bottom:1.5px solid var(--navy);padding-bottom:.22rem;margin-bottom:.45rem}
+.roster .rh .role{font-weight:800;color:var(--navy);font-size:.92rem}
+.roster .rh .cnt{font-size:.76rem;color:var(--gold);font-weight:700}
+.roster .lead{display:grid;grid-template-columns:repeat(2,1fr);gap:.28rem 1.6rem}
+.roster .lead .it{font-size:.84rem;line-height:1.45}
+.roster .lead .it .rl{color:var(--navy);font-weight:700;margin-right:.35rem}
+.roster .namegrid{display:grid;grid-template-columns:repeat(5,1fr);gap:.26rem .8rem}
+.roster .namegrid .nm2{font-size:.8rem;line-height:1.4;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.roster .namegrid .nm2 b{color:var(--ink);font-weight:700}
+.roster .namegrid .nm2 i{color:var(--gray);font-style:normal;font-size:.72rem;margin-left:.15rem}
+
+/* ---------- 표 ---------- */
+table{width:100%;border-collapse:collapse;font-size:.86rem}
+thead th{
+  background:var(--navy);color:#fff;font-weight:700;
+  padding:.5rem .6rem;text-align:center;font-size:.84rem;
+}
+tbody td,tbody th{
+  border-bottom:1px solid var(--line);padding:.46rem .6rem;vertical-align:top;
+}
+tbody th{background:var(--bg-soft);font-weight:700;text-align:center;white-space:nowrap;color:var(--navy)}
+td.c{text-align:center}
+td.r{text-align:right;font-variant-numeric:tabular-nums}
+tr.total td{background:#FBF7EC;font-weight:700;border-top:2px solid var(--gold)}
+.tbl-tight td,.tbl-tight th{padding:.34rem .5rem;font-size:.8rem}
+
+/* ---------- 카드 ---------- */
+.cards{display:grid;gap: .9rem;margin: .4rem 0 1rem}
+.cards.c3{grid-template-columns:repeat(3,1fr)}
+.cards.c4{grid-template-columns:repeat(4,1fr)}
+.cards.c5{grid-template-columns:repeat(5,1fr)}
+.card{
+  border:1px solid var(--line);border-top:3px solid var(--navy);
+  background:var(--bg-soft);padding: .8rem .9rem;border-radius:0 0 6px 6px;
+}
+.card .k{font-size:.78rem;font-weight:600;color:var(--gray);margin-bottom:.3rem}
+.card .v{font-size:1.45rem;font-weight:800;color:var(--navy);letter-spacing:-.02em}
+.card .v small{font-size:.85rem;font-weight:600;color:var(--gray)}
+.card.gold{border-top-color:var(--gold)}
+.card.gold .v{color:var(--gold)}
+
+/* ---------- 표지 ---------- */
+.cover{justify-content:center;background:
+  linear-gradient(135deg,#fff 0%,#fff 56%,#EEF1F8 100%);}
+.cover .frame{padding-left:0}
+.cover .org{font-size:.95rem;font-weight:700;color:var(--gold);letter-spacing:.28em;margin-bottom:1.5rem}
+.cover .lead-line{font-size:1.7rem;font-weight:700;color:var(--ink);letter-spacing:-.01em;margin-bottom:.1rem}
+.cover h1.big{font-size:6.2rem;font-weight:900;color:var(--navy);letter-spacing:-.04em;line-height:1;margin:0}
+.cover h1.big::after{content:"";display:block;width:4.6rem;height:.42rem;background:var(--gold);border-radius:2px;margin-top:1.3rem;margin-bottom:2rem}
+/* 마무리 페이지용 기존 제목 */
+.cover h1{font-size:3.1rem;font-weight:900;color:var(--navy);letter-spacing:-.03em;line-height:1.22;margin-bottom:2rem}
+.cover h1 .yr{display:block;font-size:1.35rem;font-weight:600;color:var(--ink);letter-spacing:0;margin-bottom:.4rem}
+.cover dl{display:grid;grid-template-columns:5rem 1fr;row-gap:.45rem;font-size:1rem}
+.cover dt{font-weight:700;color:var(--navy)}
+.cover dd{color:var(--ink)}
+.cover .hint{position:absolute;right:5.5%;bottom:5%;font-size:.8rem;color:var(--gray)}
+
+/* ---------- 차례 ---------- */
+.toc{list-style:none;margin-top:.6rem}
+.toc li{
+  display:flex;align-items:center;gap:1.2rem;
+  border-bottom:1px solid var(--line);padding:1.05rem .4rem;cursor:pointer;
+  transition:background .15s;
+}
+.toc li:hover{background:var(--bg-soft)}
+.toc .no{font-size:1.25rem;font-weight:800;color:var(--gold);width:2.4rem;text-align:center;flex:none}
+.toc .t{font-size:1.18rem;font-weight:700;color:var(--ink)}
+.toc .pg{margin-left:auto;font-size:.85rem;color:var(--gray)}
+
+/* ---------- 타임라인 ---------- */
+.half-tag{display:inline-block;background:var(--navy);color:#fff;font-size:.78rem;font-weight:700;padding:.2rem .7rem;border-radius:99px;margin-bottom:.6rem}
+.half-tag.plan{background:#fff;color:var(--navy);border:1.5px solid var(--navy)}
+.month-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:.8rem}
+.mcell{border:1px solid var(--line);border-radius:6px;padding:.65rem .75rem;background:#fff}
+.mcell .m{font-size:.95rem;font-weight:800;color:var(--navy);border-bottom:1px solid var(--line);padding-bottom:.3rem;margin-bottom:.4rem}
+.mcell ul{list-style:none}
+.mcell li{font-size:.8rem;line-height:1.45;padding-left:.7rem;position:relative;margin-bottom:.2rem}
+.mcell li::before{content:"";position:absolute;left:0;top:.55em;width:.28rem;height:.28rem;background:var(--gold);border-radius:50%}
+.mcell li.hl{font-weight:700;color:var(--navy)}
+
+/* ---------- 학술대회 ---------- */
+.conf-theme{
+  background:var(--navy);color:#fff;border-radius:8px;
+  padding:1.3rem 1.6rem;margin-bottom:1rem;
+}
+.conf-theme .lbl{font-size:.78rem;letter-spacing:.18em;color:#C9D2F0;font-weight:600;margin-bottom:.35rem}
+.conf-theme .th{font-size:1.55rem;font-weight:800;letter-spacing:-.01em}
+.kv{display:grid;grid-template-columns:6.5rem 1fr;row-gap:.5rem;font-size:.95rem;align-content:start}
+.kv dt{font-weight:700;color:var(--navy)}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:1.6rem;align-items:start}
+
+/* ---------- 개회식 순서 ---------- */
+.program{display:grid;grid-template-columns:7rem 1fr;row-gap:1.15rem;align-content:start;margin-top:.6rem}
+.program>dt{
+  font-weight:800;color:#fff;background:var(--navy);
+  align-self:start;justify-self:start;
+  padding:.28rem .9rem;border-radius:99px;font-size:.9rem;
+}
+.program>dd{font-size:1.02rem;line-height:1.5;padding-top:.1rem}
+.program>dd b{color:var(--navy);font-weight:700}
+.program .muted{color:var(--gray);font-size:.92rem}
+.program .names{list-style:none;display:grid;row-gap:.42rem}
+.program .names li{display:grid;grid-template-columns:6rem 1fr;align-items:baseline;column-gap:.4rem}
+.program .names .nm{font-weight:700;color:var(--ink)}
+.program .names .aff{color:var(--gray);font-size:.92rem}
+
+/* ---------- 위원회 구성 ---------- */
+.committee{display:flex;flex-direction:column;gap:.55rem;margin-top:.5rem}
+.committee .chair{display:flex;align-items:baseline;gap:.6rem;padding:.1rem 0 .1rem .1rem}
+.committee .grp{display:grid;grid-template-columns:3.6rem 1fr;align-items:start;gap:.6rem;padding-left:.1rem}
+.committee .mems{list-style:none;display:flex;flex-wrap:wrap;gap:.35rem 1.1rem}
+.committee .mems li{display:inline-flex;align-items:baseline;gap:.32rem}
+.committee .nm{font-weight:700;color:var(--ink)}
+.committee .aff{color:var(--gray);font-size:.88rem}
+.role-tag{display:inline-block;font-size:.74rem;font-weight:700;color:#fff;background:var(--gray);padding:.18rem 0;border-radius:99px;white-space:nowrap;line-height:1.5;width:3.6rem;text-align:center;box-sizing:border-box;flex:none}
+.role-tag.chair-tag{background:var(--navy)}
+
+/* ---------- 분야 칩 ---------- */
+.field-chips{display:flex;flex-wrap:wrap;gap:.5rem;margin:.5rem 0 .2rem}
+.field-chips .chip{
+  display:inline-flex;align-items:baseline;gap:.35rem;
+  border:1px solid var(--line);border-radius:99px;padding:.3rem .8rem;background:#fff;font-size:.88rem;
+}
+.field-chips .chip b{color:var(--navy);font-weight:800}
+.field-chips .chip .c{color:var(--gold);font-weight:800;font-variant-numeric:tabular-nums}
+
+/* ---------- 접기 ---------- */
+details{border:1px solid var(--line);border-radius:6px;margin-top:.7rem;background:#fff}
+summary{
+  cursor:pointer;padding:.65rem .9rem;font-size:.9rem;font-weight:700;color:var(--navy);
+  list-style:none;display:flex;align-items:center;gap:.5rem;
+}
+summary::before{content:"▸";color:var(--gold);transition:transform .15s}
+details[open] summary::before{transform:rotate(90deg)}
+details .body{padding:0 .9rem .8rem;font-size:.83rem;line-height:1.65;color:var(--ink)}
+details .body b{color:var(--navy)}
+
+/* ---------- 하단 바 ---------- */
+#hud{
+  position:fixed;left:0;right:0;bottom:0;height:48px;
+  display:flex;align-items:center;justify-content:center;gap:1rem;
+  pointer-events:none;z-index:50;
+}
+#stage:fullscreen #hud,#stage:-webkit-full-screen #hud{bottom:10px;}
+#hud .box{
+  pointer-events:auto;display:flex;align-items:center;gap:6px;
+  background:rgba(14,26,74,.92);color:#fff;border-radius:99px;
+  padding:5px 12px;font-size:13px;backdrop-filter:blur(4px);
+}
+#hud button{
+  background:none;border:none;color:#fff;font-size:15px;cursor:pointer;
+  width:28px;height:28px;border-radius:50%;line-height:1;padding:0;
+}
+#hud button:hover{background:rgba(255,255,255,.15)}
+#hud button:focus-visible{outline:2px solid var(--gold)}
+#pageNum{font-variant-numeric:tabular-nums;min-width:48px;text-align:center;font-size:13px}
+#progress{position:fixed;left:0;top:0;height:3px;background:var(--gold);width:0;z-index:60;transition:width .25s}
+.slide-footer{
+  position:absolute;left:5.5%;bottom:2.6%;font-size:.72rem;color:#B9BFCF;letter-spacing:.06em;
+}
+
+/* ---------- 인쇄 ---------- */
+@media print{
+  html{font-size:15px}
+  body{display:block;background:#fff;overflow:visible}
+  #stage{width:100%;aspect-ratio:auto;box-shadow:none;border-radius:0;overflow:visible}
+  .slide{display:flex !important;position:relative;page-break-after:always;min-height:100vh;overflow:visible}
+  #hud,#progress,.cover .hint{display:none}
+  details{display:block}
+}
+</style>
+</head>
+<body>
+
+<div id="stage">
+
+<div id="progress"></div>
+
+<!-- 1. 표지 -->
+<section class="slide cover active">
+  <div class="frame">
+    <div class="org">한국기업경영학회 · KOCOMA</div>
+    <div class="lead-line">2026년도 춘계 한국기업경영학회</div>
+    <h1 class="big">이사회</h1>
+    <dl>
+      <dt>일&nbsp;&nbsp;&nbsp;시</dt><dd>2026년 6월 12일(금) 11:30 ~ 12:00</dd>
+      <dt>장&nbsp;&nbsp;&nbsp;소</dt><dd>건국대학교 경영관 304호</dd>
+      <dt>참&nbsp;&nbsp;&nbsp;석</dt><dd>한국기업경영학회 임원(이사회)</dd>
+    </dl>
+  </div>
+  <div class="hint">⛶ 버튼(또는 F 키)으로 전체화면 · 방향키·클릭으로 이동</div>
+</section>
+
+<!-- 2. 차례 -->
+<section class="slide">
+  <div class="eyebrow">CONTENTS</div>
+  <h2 class="title">차례</h2>
+  <ul class="toc">
+    <li data-go="2"><span class="no">Ⅰ</span><span class="t">상반기 경과보고 및 하반기 일정(안)</span><span class="pg">03–04</span></li>
+    <li data-go="4"><span class="no">Ⅱ</span><span class="t">학술대회 개최 개요</span><span class="pg">05–07</span></li>
+    <li data-go="7"><span class="no">Ⅲ</span><span class="t">편집위원회 운영 현황 보고</span><span class="pg">08–10</span></li>
+    <li data-go="10"><span class="no">Ⅳ</span><span class="t">2026년 벽소학술상 심사 결과</span><span class="pg">11–12</span></li>
+    <li data-go="12"><span class="no">Ⅴ</span><span class="t">임원 구성 및 회비 납부 현황</span><span class="pg">13–15</span></li>
+  </ul>
+</section>
+
+<!-- 3. I-1 상반기 경과 -->
+<section class="slide has-rail" data-agenda="1">
+  <div class="eyebrow">AGENDA Ⅰ</div>
+  <h2 class="title">상반기 경과보고<small>2026.01 ~ 2026.06</small></h2>
+  <span class="half-tag">상반기 · 완료 및 진행</span>
+  <div class="month-grid">
+    <div class="mcell"><div class="m">1월</div><ul>
+      <li>2026년 정기총회 개최 (1/26 12시, 삼정호텔)</li>
+      <li>2026년 운암학술상 시상 (정원준 숭실대 교수)</li>
+      <li>학회 인수인계 (임원·예산안·홈페이지 등)</li></ul></div>
+    <div class="mcell"><div class="m">2월</div><ul>
+      <li>삼구아이앤씨 구자관 대표사원 예방 후 협력 논의</li>
+      <li>「기업경영연구」 33권 1호 발간</li></ul></div>
+    <div class="mcell"><div class="m">3월</div><ul>
+      <li>2026년 벽소학술상 연구과제 공모</li>
+      <li>춘계학술대회 조직위원회 구성</li></ul></div>
+    <div class="mcell"><div class="m">4월</div><ul>
+      <li>「기업경영연구」 33권 2호 발간</li>
+      <li>제1차 분과위원장 회의 (4/24 18시)</li>
+      <li>2026년 벽소학술상 연구과제 선정</li></ul></div>
+    <div class="mcell"><div class="m">5월</div><ul>
+      <li>춘계학술대회 준비</li>
+      <li>뉴스레터 2026년 5월호 발간</li></ul></div>
+    <div class="mcell"><div class="m">6월</div><ul>
+      <li class="hl">춘계학술대회 개최 (6/12 금, 건국대 경영관)</li>
+      <li class="hl">이사회 및 총회 개최</li>
+      <li>대표자 및 등기이사 변경</li>
+      <li>「기업경영연구」 33권 3호 발간</li></ul></div>
+  </div>
+</section>
+
+<!-- 4. I-2 하반기 일정(안) -->
+<section class="slide has-rail" data-agenda="1">
+  <div class="eyebrow">AGENDA Ⅰ</div>
+  <h2 class="title">하반기 일정(안)<small>2026.07 ~ 2026.12</small></h2>
+  <span class="half-tag plan">하반기 · 계획</span>
+  <div class="month-grid">
+    <div class="mcell"><div class="m">7월</div><ul>
+      <li>뉴스레터 2026년 7월호 발간</li></ul></div>
+    <div class="mcell"><div class="m">8월</div><ul>
+      <li>「기업경영연구」 33권 4호 발간</li>
+      <li>추계학술대회 조직위원회 구성</li></ul></div>
+    <div class="mcell"><div class="m">9월</div><ul>
+      <li>한국연구재단 학술지 지원사업 신청</li>
+      <li>추계학술대회 준비</li>
+      <li>뉴스레터 2026년 9월호 발간</li></ul></div>
+    <div class="mcell"><div class="m">10월</div><ul>
+      <li>「기업경영연구」 33권 5호 발간</li>
+      <li>추계학술대회 준비</li></ul></div>
+    <div class="mcell"><div class="m">11월</div><ul>
+      <li class="hl">추계학술대회 개최 (11/6 금, 건국대 경영관)</li>
+      <li class="hl">이사회 및 총회 개최</li>
+      <li>2026년 벽소학술상 연구과제 시상</li>
+      <li>뉴스레터 2026년 11월호 발간</li></ul></div>
+    <div class="mcell"><div class="m">12월</div><ul>
+      <li>하반기 정책포럼 개최</li>
+      <li>「기업경영연구」 33권 6호 발간</li>
+      <li>2027년 운암학술상 연구과제 공모</li>
+      <li>학회 결산 및 인수인계</li></ul></div>
+  </div>
+</section>
+
+<!-- 5. II-1 학술대회 개요 -->
+<section class="slide has-rail" data-agenda="2">
+  <div class="eyebrow">AGENDA Ⅱ</div>
+  <h2 class="title">학술대회 개최 개요<small>2026년 춘계학술대회</small></h2>
+  <div class="conf-theme">
+    <div class="lbl">대주제</div>
+    <div class="th">중견·중소기업의 지속가능한 성장</div>
+  </div>
+  <dl class="kv" style="grid-template-columns:7rem 1fr;row-gap:.85rem;font-size:1rem">
+    <dt>일시</dt><dd>2026년 6월 12일(금) 13:20</dd>
+    <dt>장소</dt><dd>건국대학교 경영관 101호</dd>
+    <dt>주최</dt><dd>한국기업경영학회 · 한국직업능력연구원 · 한국지속가능경영원 · 건국경영연구소</dd>
+    <dt>후원</dt><dd>삼구아이앤씨 · 건국대학교 · 한국지속가능경영연구원</dd>
+    <dt>사전등록</dt><dd>2026.05.18.(월) ~ 06.07.(일)</dd>
+  </dl>
+</section>
+
+<!-- 6. II-2 개회식 순서 -->
+<section class="slide has-rail" data-agenda="2">
+  <div class="eyebrow">AGENDA Ⅱ</div>
+  <h2 class="title">개회식 순서<small>13:20 ~ 13:50</small></h2>
+  <dl class="program">
+    <dt>개회사</dt>
+    <dd>윤동열 <b>한국기업경영학회 회장</b></dd>
+
+    <dt>인사말</dt>
+    <dd>고혜원 <b>한국직업능력연구원 원장</b></dd>
+
+    <dt>축사</dt>
+    <dd>
+      <ul class="names">
+        <li><span class="nm">권창준</span><span class="aff">고용노동부 차관</span></li>
+        <li><span class="nm">이정한</span><span class="aff">경사노위 상임위원</span></li>
+        <li><span class="nm">조주현</span><span class="aff">중소벤처기업연구원 원장</span></li>
+        <li><span class="nm">박종필</span><span class="aff">노사발전재단 사무총장</span></li>
+        <li><span class="nm">최정일</span><span class="aff">한국경영학회 회장</span></li>
+      </ul>
+    </dd>
+
+    <dt>기조강연</dt>
+    <dd>「노동시장과 노사관계 변화에 따른 기업의 대응 전략」<br>
+      <b>권기섭</b> 건국대학교 석좌교수 <span class="muted">(前 경사노위 위원장 / 前 고용노동부 차관)</span></dd>
+  </dl>
+</section>
+
+<!-- 7. II-3 학술대회 일정표 -->
+<section class="slide has-rail" data-agenda="2">
+  <div class="eyebrow">AGENDA Ⅱ</div>
+  <h2 class="title">학술대회 세부 일정<small>2026.06.12.(금)</small></h2>
+  <table class="tbl-tight">
+    <thead><tr><th style="width:9rem">시간</th><th style="width:7rem">구분</th><th>내용</th><th style="width:9rem">진행</th></tr></thead>
+    <tbody>
+      <tr><td class="c">11:30–12:00</td><th>이사회</th><td>한국기업경영학회 이사회 (304호)</td><td class="c">홍운기 운영위원장</td></tr>
+      <tr><td class="c">12:00–13:20</td><th>등록</th><td>학회 참가 등록 / VIP 티타임</td><td class="c">–</td></tr>
+      <tr><td class="c">13:20–13:50</td><th>개회식</th><td>개회사 · 인사말 · 축사</td><td class="c">홍운기 운영위원장</td></tr>
+      <tr><td class="c">13:50–14:00</td><th>경영자 대상</th><td>강경성 KOTRA 사장<br>조세형 시앤피(C&amp;P)컨설팅그룹 대표</td><td class="c">류성민 심의위원장</td></tr>
+      <tr><td class="c">14:00–14:30</td><th>기조강연</th><td>노동시장과 노사관계 변화에 따른 기업의 대응 전략 (권기섭 석좌교수)</td><td class="c">–</td></tr>
+      <tr><td class="c">14:50–16:30</td><th>학술세션 1</th><td>
+        <div class="session-chips">
+          <span class="schip">벽소학술상Ⅰ<span class="rm">101호</span></span>
+          <span class="schip">OB<span class="rm">201호</span></span>
+          <span class="schip">전략/국제경영Ⅰ<span class="rm">204호</span></span>
+          <span class="schip">재무/회계Ⅰ<span class="rm">205호</span></span>
+          <span class="schip">생산/MIS<span class="rm">206호</span></span>
+          <span class="schip">마케팅<span class="rm">207호</span></span>
+        </div></td><td class="c">–</td></tr>
+      <tr><td class="c">16:40–18:00</td><th>학술세션 2</th><td>
+        <div class="session-chips">
+          <span class="schip">벽소학술상Ⅱ<span class="rm">101호</span></span>
+          <span class="schip">HR<span class="rm">201호</span></span>
+          <span class="schip">전략/국제경영Ⅱ<span class="rm">204호</span></span>
+          <span class="schip">재무/회계Ⅱ<span class="rm">205호</span></span>
+          <span class="schip">직능연 세션<span class="rm">206호</span></span>
+        </div></td><td class="c">–</td></tr>
+      <tr><td class="c">18:00–18:10</td><th>총회</th><td>편집위원회 보고 (박진모 편집위원장)<br>연구윤리위원회 공지 (조윤형 연구윤리위원장)</td><td class="c" rowspan="2">박지성 학술위원장</td></tr>
+      <tr><td class="c">18:10–18:20</td><th>시상식·폐회</th><td>우수발표논문 시상식<br>폐회사 (윤동열 회장)</td></tr>
+    </tbody>
+  </table>
+  <p class="note">※ 중간 휴식: 14:30–14:50, 16:30–16:40 (coffee break, 304호)</p>
+</section>
+
+<!-- 7. III-1 편집위원회 -->
+<section class="slide has-rail" data-agenda="3">
+  <div class="eyebrow">AGENDA Ⅲ</div>
+  <h2 class="title">편집위원회 운영 현황<small>편집위원장 박진모 교수(울산대)</small></h2>
+  <h3 class="sub">편집위원회 구성</h3>
+  <p style="margin-bottom:.2rem">기업경영 전반을 반영할 수 있는 경영학 분야 전문가 <b style="color:var(--navy)">23명 위촉</b></p>
+  <div class="field-chips">
+    <span class="chip"><b>경영학 일반</b><span class="c">2</span></span>
+    <span class="chip"><b>마케팅</b><span class="c">4</span></span>
+    <span class="chip"><b>인사조직</b><span class="c">5</span></span>
+    <span class="chip"><b>재무</b><span class="c">3</span></span>
+    <span class="chip"><b>회계</b><span class="c">4</span></span>
+    <span class="chip"><b>생산관리</b><span class="c">3</span></span>
+    <span class="chip"><b>기술경영</b><span class="c">1</span></span>
+    <span class="chip"><b>국제경영/전략</b><span class="c">1</span></span>
+  </div>
+  <ul class="plain" style="margin-top:.5rem">
+    <li>1차 편집위원회 회의: 4/29(수) 온라인 — ① 4월호(33권 2호) 게재 논문(대상 8편) 논의, ② 등재학술지 재인증평가 신청 논의</li>
+  </ul>
+  <h3 class="sub">등재학술지 재인증평가 계획</h3>
+  <table style="max-width:46rem">
+    <tbody>
+      <tr><th style="width:8rem">신청</th><td>2026년 한국연구재단 등재학술지 재인증평가 (신청기간 2026.05.28.~06.16.)</td></tr>
+      <tr><th>평가대상</th><td>2023년 ~ 2025년 (3개년)</td></tr>
+      <tr><th>제출서류</th><td>학술지인증 신청서 등 5종</td></tr>
+      <tr><th>결과발표</th><td>12월 중</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- 8. III-2 논문 게재 현황 -->
+<section class="slide has-rail" data-agenda="3">
+  <div class="eyebrow">AGENDA Ⅲ</div>
+  <h2 class="title">논문 게재 현황<small>2026.01.01. ~ 2026.05.31.</small></h2>
+  <div class="cards c3">
+    <div class="card"><div class="k">신규 투고</div><div class="v">38<small>편</small></div></div>
+    <div class="card"><div class="k">게재 (2월호 13 · 4월호 8)</div><div class="v">21<small>편</small></div></div>
+    <div class="card gold"><div class="k">게재율 (4월말 기준, 21/36)</div><div class="v">58.33<small>%</small></div></div>
+  </div>
+  <table class="tbl-tight">
+    <thead>
+      <tr><th rowspan="2">논문집</th><th colspan="3">투고편수</th><th rowspan="2">누적(A)</th><th colspan="2">Accept / Reject</th><th rowspan="2">게재율(B/A)</th></tr>
+      <tr><th>신규투고</th><th>이월논문</th><th>차월논문</th><th>게재논문(B)</th><th>게재불가</th></tr>
+    </thead>
+    <tbody>
+      <tr><th>2월호</th><td class="c">16</td><td class="c">9</td><td class="c">(5)</td><td class="c">20</td><td class="c">13</td><td class="c">7</td><td class="c">65%</td></tr>
+      <tr><th>4월호</th><td class="c">10</td><td class="c">6</td><td class="c">–</td><td class="c">16</td><td class="c">8</td><td class="c">–</td><td class="c">58.33%</td></tr>
+      <tr><th>6월호</th><td class="c">12</td><td class="c">–</td><td class="c">–</td><td class="c">–</td><td class="c">–</td><td class="c">–</td><td class="c">–</td></tr>
+      <tr><th>8·10·12월호</th><td class="c">–</td><td class="c">–</td><td class="c">–</td><td class="c">–</td><td class="c">–</td><td class="c">–</td><td class="c">–</td></tr>
+      <tr class="total"><td class="c"><b>합계·평균</b></td><td class="c">38</td><td class="c">15</td><td class="c">(5)</td><td class="c">48</td><td class="c">21</td><td class="c">–</td><td class="c">43.75%</td></tr>
+    </tbody>
+  </table>
+  <h3 class="sub">월별 편집 및 인쇄비</h3>
+  <table class="tbl-tight" style="max-width:34rem">
+    <tbody>
+      <tr><th>2월 (33권 1호)</th><td class="r">2,347,000원</td><th>4월 (33권 2호)</th><td class="r">1,475,000원</td></tr>
+      <tr><th>6월 (33권 3호)</th><td class="r">–</td><th>8·10·12월</th><td class="r">–</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- 9. III-3 회계보고 -->
+<section class="slide has-rail" data-agenda="3">
+  <div class="eyebrow">AGENDA Ⅲ</div>
+  <h2 class="title">편집위원회 회계보고<small>수입·지출 내역 2026.03.01. ~ 2026.05.31.</small></h2>
+  <div class="two-col">
+    <div>
+      <h3 class="sub" style="margin-top:0">수입 내역</h3>
+      <table class="tbl-tight">
+        <thead><tr><th>항목</th><th>내역</th><th>금액(원)</th></tr></thead>
+        <tbody>
+          <tr><th>기초이월</th><td>이월금 (3/1, 직전 편집위 인수액)</td><td class="r">22,047,721</td></tr>
+          <tr><th>심사비</th><td>심사비</td><td class="r">2,600,000</td></tr>
+          <tr><th>게재료</th><td>게재료</td><td class="r">8,430,000</td></tr>
+          <tr><th>기타</th><td>타계정 입금 등</td><td class="r">520,000</td></tr>
+          <tr class="total"><td class="c" colspan="2">입금 합계</td><td class="r">33,597,721</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div>
+      <h3 class="sub" style="margin-top:0">지출 내역</h3>
+      <table class="tbl-tight">
+        <thead><tr><th>항목</th><th>내역</th><th>금액(원)</th></tr></thead>
+        <tbody>
+          <tr><th>학술지 발간비</th><td>출판료</td><td class="r">3,822,000</td></tr>
+          <tr><th>간사 인건비</th><td>2인 인건비</td><td class="r">2,100,000</td></tr>
+          <tr><th>편집위 운영비</th><td>편집위 회의 및 26년도 학술상 선정 등</td><td class="r">1,408,600</td></tr>
+          <tr><th>기타</th><td>제세금 및 공과, 환불 등</td><td class="r">300,000</td></tr>
+          <tr class="total"><td class="c" colspan="2">출금 합계</td><td class="r">7,630,000</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="info-row" style="margin-top:1.1rem">
+    <div class="info"><div class="k">계좌 잔액</div><div class="v">25,967,721원</div></div>
+    <div class="info"><div class="k">계좌</div><div class="v">경남은행 479-910029-38104 <span class="sub-muted">· 예금주 박진모</span></div></div>
+    <div class="info"><div class="k">비고</div><div class="v">기초이월은 3월 1일자에 직전 편집위원회로부터 인수받은 금액임</div></div>
+  </div>
+</section>
+
+<!-- 10. IV-1 벽소학술상 개요 -->
+<section class="slide has-rail" data-agenda="4">
+  <div class="eyebrow">AGENDA Ⅳ</div>
+  <h2 class="title">2026년 벽소학술상 심사 개요</h2>
+  <div class="two-col">
+    <div>
+      <h3 class="sub" style="margin-top:0">후원기관</h3>
+      <p><b>㈜삼구아이앤씨</b> (구자관 책임대표사원)</p>
+      <p class="note" style="margin-top:.3rem">1968년 청소용품 제조에서 출발하여 건물종합관리·생산도급 등을 53년간 수행해 온 아웃소싱 전문업체 (매출액 3조 6,000억 원, 임직원 약 55,000명)</p>
+      <h3 class="sub">심사 근거</h3>
+      <p>벽소학술상 시상 규정 제4조(수상자 선정위원회)</p>
+      <ul class="plain" style="margin-top:.3rem">
+        <li>선정·시상 기준과 절차 운영을 위한 ‘수상자 선정위원회’ 구성</li>
+        <li>7인 이내 — 편집위원장·학술위원장·차기회장 당연직, 위원장 추천 4인 이내</li>
+        <li>임기 1년(연임 가능), 위원장은 편집위원장</li>
+      </ul>
+    </div>
+    <div>
+      <h3 class="sub" style="margin-top:0">접수 및 심사</h3>
+      <table class="tbl-tight">
+        <tbody>
+          <tr><th style="width:7rem">접수 기간</th><td>2026.03.03.(화) ~ 03.22.(일)</td></tr>
+          <tr><th>접수 현황</th><td><b>23개 팀</b></td></tr>
+          <tr><th>심사 기간</th><td>2026.04.01.(수) ~ 04.07.(화)</td></tr>
+          <tr><th>선정 규모</th><td><b>10개 팀</b></td></tr>
+          <tr><th>선정 방법</th><td>평가항목·배점기준에 따라 연구자명과 대학을 블라인드 처리 후 서면평가</td></tr>
+        </tbody>
+      </table>
+      <h3 class="sub">심사위원회 <span style="font-weight:500;color:var(--gray);font-size:.85rem">7인 이내</span></h3>
+      <div class="committee">
+        <div class="chair">
+          <span class="role-tag chair-tag">위원장</span>
+          <span class="nm">박진모</span><span class="aff">편집위원장 · 당연직</span>
+        </div>
+        <div class="grp">
+          <span class="role-tag">당연직</span>
+          <ul class="mems">
+            <li><span class="nm">박지성</span><span class="aff">학술위원장</span></li>
+            <li><span class="nm">이재은</span><span class="aff">차기회장</span></li>
+          </ul>
+        </div>
+        <div class="grp">
+          <span class="role-tag">위촉직</span>
+          <ul class="mems">
+            <li><span class="nm">조윤형</span><span class="aff">연구윤리위원장</span></li>
+            <li><span class="nm">노민선</span><span class="aff">중견·중소기업 분과위원장</span></li>
+            <li><span class="nm">윤동열</span><span class="aff">회장</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 11. IV-2 심사 결과 -->
+<section class="slide has-rail" data-agenda="4">
+  <div class="eyebrow">AGENDA Ⅳ</div>
+  <h2 class="title">벽소학술상 심사 결과<small>선정 10개 연구과제</small></h2>
+  <table class="tbl-tight">
+    <thead><tr><th style="width:4rem">순위</th><th>연구과제명</th></tr></thead>
+    <tbody>
+      <tr><td class="c"><b>1</b></td><td>일터혁신 기반 일하는 방식의 전환을 위한 통합 솔루션: 중소·중견기업에 적용가능한 근로시간 단축 모델 개발</td></tr>
+      <tr><td class="c"><b>2</b></td><td>무엇이 안전행동을 촉진하는가? 중소·중견기업의 안전관리시스템과 안전문화의 시너지 효과에 대한 다수준 연구</td></tr>
+      <tr><td class="c"><b>3</b></td><td>중소·중견 제조기업의 디지털 전환 기반 생산성 혁신: 기업의 사회적 자본의 효과와 파트너십 관계연령의 조절효과</td></tr>
+      <tr><td class="c"><b>4</b></td><td>벤처인증 획득 이후 기업의 성과 하락 원인 분석</td></tr>
+      <tr><td class="c"><b>5</b></td><td>기후위기 대응 인공지능(AI) 역량과 공급망 회복탄력성: 공급망 이해관계자 혁신과 혁신중개조직의 역할</td></tr>
+      <tr><td class="c"><b>6</b></td><td>중대재해처벌법이 기업 성과와 노동구조에 미치는 영향: 기업 규모별 비교 분석</td></tr>
+      <tr><td class="c"><b>7</b></td><td>중견·중소기업의 상속증여세법 상 가업승계 지원제도 개선 방안에 관한 연구</td></tr>
+      <tr><td class="c"><b>8</b></td><td>중소·중견기업의 생산성혁신을 위한 AI피드백 도입 전략: 귀인이론을 활용한 수용도 분석</td></tr>
+      <tr><td class="c"><b>9</b></td><td>기업수준 직무만족이 노동생산성에 미치는 영향에 관한 연구: LDA 토픽모형 기반의 텍스트 분석</td></tr>
+      <tr><td class="c"><b>10</b></td><td>중소·중견기업 지각된 AI-HRM 활용 수준이 구성원의 직무성과에 미치는 영향: 내적동기의 매개효과와 포용적 리더십의 조절된 매개효과를 중심으로</td></tr>
+    </tbody>
+  </table>
+  <p class="note">※ 시상: 2026년 11월 추계학술대회 시 벽소학술상 연구과제 시상 예정</p>
+</section>
+
+<!-- 12. V-1 임원 구성 -->
+<section class="slide has-rail" data-agenda="5">
+  <div class="eyebrow">AGENDA Ⅴ</div>
+  <h2 class="title">제30대 운영위원회 임원 구성</h2>
+  <div class="roster">
+        <div class="rgrp">
+          <div class="rh"><span class="role">회장단 · 위원장단</span><span class="cnt">17명</span></div>
+          <div class="lead">
+            <div class="it"><span class="rl">회장</span>윤동열 (건국대)</div>
+            <div class="it"><span class="rl">수석부회장</span>이재은 (순천대)</div>
+            <div class="it"><span class="rl">운영위원장</span>홍운기 (건국대)</div>
+            <div class="it"><span class="rl">편집위원장</span>박진모 (울산대)</div>
+            <div class="it"><span class="rl">학술위원장</span>박지성 (충남대)</div>
+            <div class="it"><span class="rl">연구윤리위원장</span>조윤형 (조선대)</div>
+            <div class="it"><span class="rl">산학협력위원장</span>이민호 (남서울대)</div>
+            <div class="it"><span class="rl">국제교류위원장</span>권지민 (경기대)</div>
+            <div class="it"><span class="rl">홍보위원장</span>정진향 (여주대)</div>
+            <div class="it"><span class="rl">지속가능경영 분과위원장</span>한평호 (한국생산성본부)</div>
+            <div class="it"><span class="rl">중견·중소기업 분과위원장</span>노민선 (중소벤처기업연구원)</div>
+            <div class="it"><span class="rl">인사조직 분과위원장</span>채연주 (전북대)</div>
+            <div class="it"><span class="rl">마케팅 분과위원장</span>김모란 (UNIST)</div>
+            <div class="it"><span class="rl">전략/국제경영 분과위원장</span>권일숙 (한남대)</div>
+            <div class="it"><span class="rl">생산 분과위원장</span>이평수 (경기대)</div>
+            <div class="it"><span class="rl">MIS 분과위원장</span>이순희 (한국외대)</div>
+            <div class="it"><span class="rl">재무/회계 분과위원장</span>곽영민 (울산대)</div>
+          </div>
+        </div>
+
+        <div class="rgrp">
+          <div class="rh"><span class="role">부회장</span><span class="cnt">29명</span></div>
+          <div class="namegrid">
+            <span class="nm2"><b>곽영민</b><i>울산대</i></span><span class="nm2"><b>권기욱</b><i>건국대</i></span><span class="nm2"><b>김성훈</b><i>한남대</i></span><span class="nm2"><b>김정식</b><i>대진대</i></span><span class="nm2"><b>김태완</b><i>건국대</i></span>
+            <span class="nm2"><b>김현정</b><i>인하대</i></span><span class="nm2"><b>노경호</b><i>대림대</i></span><span class="nm2"><b>류준열</b><i>서울시립대</i></span><span class="nm2"><b>박상문</b><i>강원대</i></span><span class="nm2"><b>박재춘</b><i>단국대</i></span>
+            <span class="nm2"><b>박정민</b><i>울산대</i></span><span class="nm2"><b>박지성</b><i>충남대</i></span><span class="nm2"><b>박진모</b><i>울산대</i></span><span class="nm2"><b>방호진</b><i>제주대</i></span><span class="nm2"><b>신제구</b><i>aSSIST</i></span>
+            <span class="nm2"><b>신현한</b><i>연세대</i></span><span class="nm2"><b>양재완</b><i>한국외대</i></span><span class="nm2"><b>유갑열</b><i>길림대</i></span><span class="nm2"><b>유한수</b><i>극동대</i></span><span class="nm2"><b>이민호</b><i>남서울대</i></span>
+            <span class="nm2"><b>임상혁</b><i>단국대</i></span><span class="nm2"><b>전인</b><i>영남대</i></span><span class="nm2"><b>정원준</b><i>숭실대</i></span><span class="nm2"><b>정진향</b><i>여주대</i></span><span class="nm2"><b>조윤형</b><i>조선대</i></span>
+            <span class="nm2"><b>조철호</b><i>대구한의대</i></span><span class="nm2"><b>채연주</b><i>전북대</i></span><span class="nm2"><b>홍운기</b><i>건국대</i></span><span class="nm2"><b>황용식</b><i>세종대</i></span>
+          </div>
+        </div>
+
+        <div class="rgrp">
+          <div class="rh"><span class="role">산학협력부회장</span><span class="cnt">6명</span></div>
+          <div class="namegrid">
+            <span class="nm2"><b>노민선</b><i>중소벤처기업연구원</i></span><span class="nm2"><b>문현태</b><i>한국산업인력공단</i></span><span class="nm2"><b>이상훈</b><i>TCC</i></span><span class="nm2"><b>지방근</b><i>GPTW</i></span><span class="nm2"><b>한평호</b><i>KPC</i></span>
+            <span class="nm2"><b>천장현</b><i>머서코리아</i></span>
+          </div>
+        </div>
+
+        <div class="rgrp">
+          <div class="rh"><span class="role">상임이사</span><span class="cnt">33명</span></div>
+          <div class="namegrid">
+            <span class="nm2"><b>권도희</b><i>영산대</i></span><span class="nm2"><b>권지민</b><i>경기대</i></span><span class="nm2"><b>김강호</b><i>한국고용정보원</i></span><span class="nm2"><b>김동영</b><i>성결대</i></span><span class="nm2"><b>김모란</b><i>UNIST</i></span>
+            <span class="nm2"><b>김범성</b><i>선문대</i></span><span class="nm2"><b>김상수</b><i>용인대</i></span><span class="nm2"><b>김용근</b><i>한림대</i></span><span class="nm2"><b>김용재</b><i>동남보건대</i></span><span class="nm2"><b>김우철</b><i>한기대</i></span>
+            <span class="nm2"><b>김정연</b><i>SnC경영컨설팅</i></span><span class="nm2"><b>김진희</b><i>대구가톨릭대</i></span><span class="nm2"><b>김태중</b><i>충남대</i></span><span class="nm2"><b>김태형</b><i>한기대</i></span><span class="nm2"><b>노태우</b><i>한양대</i></span>
+            <span class="nm2"><b>심지현</b><i>숙명여대</i></span><span class="nm2"><b>양대천</b><i>중앙대</i></span><span class="nm2"><b>옥지호</b><i>강원대</i></span><span class="nm2"><b>원동환</b><i>덕성여대</i></span><span class="nm2"><b>윤성두</b><i>경희대</i></span>
+            <span class="nm2"><b>윤지환</b><i>고려대</i></span><span class="nm2"><b>은준엽</b><i>고려대</i></span><span class="nm2"><b>이석인</b><i>목포대</i></span><span class="nm2"><b>이수열</b><i>전남대</i></span><span class="nm2"><b>이순희</b><i>한국외대</i></span>
+            <span class="nm2"><b>이정원</b><i>경기대</i></span><span class="nm2"><b>이평수</b><i>경기대</i></span><span class="nm2"><b>이후석</b><i>성균관대</i></span><span class="nm2"><b>조준</b><i>한국산업인력공단</i></span><span class="nm2"><b>하윤주</b><i>호남대</i></span>
+            <span class="nm2"><b>홍권표</b><i>건국대</i></span><span class="nm2"><b>홍수희</b><i>신한대</i></span><span class="nm2"><b>황재원</b><i>교통대</i></span>
+          </div>
+        </div>
+
+        <div class="rgrp">
+          <div class="rh"><span class="role">이사</span><span class="cnt">39명</span></div>
+          <div class="namegrid">
+            <span class="nm2"><b>강태원</b><i>군산대</i></span><span class="nm2"><b>강호정</b><i>배재대</i></span><span class="nm2"><b>권일숙</b><i>한남대</i></span><span class="nm2"><b>김민경</b><i>한국외대</i></span><span class="nm2"><b>김소라</b><i>국립순천대</i></span>
+            <span class="nm2"><b>김시진</b><i>대구가톨릭대</i></span><span class="nm2"><b>김정희</b><i>가톨릭관동대</i></span><span class="nm2"><b>김혜진</b><i>세종대</i></span><span class="nm2"><b>김희경</b><i>청주대</i></span><span class="nm2"><b>나경아</b><i>충북대</i></span>
+            <span class="nm2"><b>박종석</b><i>대구가톨릭대</i></span><span class="nm2"><b>박현숙</b><i>서울벤처대학원대</i></span><span class="nm2"><b>박혜수</b><i>건국대</i></span><span class="nm2"><b>방일석</b><i>농협대</i></span><span class="nm2"><b>방초희</b><i>호남대</i></span>
+            <span class="nm2"><b>백서윤</b><i>원주대</i></span><span class="nm2"><b>변현수</b><i>교통대</i></span><span class="nm2"><b>송유리</b><i>호남대</i></span><span class="nm2"><b>양성경</b><i>삼성전자</i></span><span class="nm2"><b>양영수</b><i>한신대</i></span>
+            <span class="nm2"><b>오수정</b><i>인하대</i></span><span class="nm2"><b>오철진</b><i>충북대</i></span><span class="nm2"><b>윤성환</b><i>계명대</i></span><span class="nm2"><b>이병관</b><i>충북대</i></span><span class="nm2"><b>이윤상</b><i>대구가톨릭대</i></span>
+            <span class="nm2"><b>이제원</b><i>상지대</i></span><span class="nm2"><b>이태섭</b><i>경성대</i></span><span class="nm2"><b>이형석</b><i>충북대</i></span><span class="nm2"><b>이형주</b><i>서울신학대</i></span><span class="nm2"><b>전수현</b><i>계명대</i></span>
+            <span class="nm2"><b>정연주</b><i>동의대</i></span><span class="nm2"><b>정준이</b><i>백석예술대</i></span><span class="nm2"><b>주규희</b><i>서울과기대</i></span><span class="nm2"><b>채희선</b><i>국립부경대</i></span><span class="nm2"><b>최돈승</b><i>국립경국대</i></span>
+            <span class="nm2"><b>최세경</b><i>백석대</i></span><span class="nm2"><b>홍계훈</b><i>청주대</i></span><span class="nm2"><b>홍석기</b><i>단국대</i></span><span class="nm2"><b>홍윤희</b><i>수원과학대</i></span>
+          </div>
+        </div>
+      </div>
+</section>
+
+<!-- 13. V-2 임원 기여금 -->
+<section class="slide has-rail" data-agenda="5">
+  <div class="eyebrow">AGENDA Ⅴ</div>
+  <h2 class="title">임원 기여금 납부 현황<small>2026.01.01. ~ 2026.06.09.</small></h2>
+  <div class="cards c5">
+    <div class="card"><div class="k">수석부회장</div><div class="v">1<small>명</small></div></div>
+    <div class="card"><div class="k">부회장</div><div class="v">18<small>명</small></div></div>
+    <div class="card"><div class="k">산학협력부회장</div><div class="v">2<small>명</small></div></div>
+    <div class="card"><div class="k">상임이사</div><div class="v">28<small>명</small></div></div>
+    <div class="card"><div class="k">이사</div><div class="v">38<small>명</small></div></div>
+  </div>
+  <div class="cards c3">
+    <div class="card gold" style="grid-column:1/-1"><div class="k">합계</div><div class="v">87<small>명</small></div></div>
+  </div>
+  <details>
+    <summary>납부자 전체 명단 보기 (87명)</summary>
+    <div class="body">
+      <p><b>수석부회장 (1)</b> — 이재은(국립순천대)</p>
+      <p style="margin-top:.4rem"><b>부회장 (18)</b> — 곽영민(울산대), 권기욱(건국대), 김성훈(한남대), 김정식(대진대), 김현정(인하대), 노경호(대림대), 박상문(강원대), 박정민(울산대), 박지성(충남대), 박진모(울산대), 신제구(aSSIST), 유갑열(길림대), 유한수(극동대), 임상혁(단국대), 조철호(대구한의대), 채연주(전북대), 홍운기(건국대), 황용식(세종대)</p>
+      <p style="margin-top:.4rem"><b>산학협력부회장 (2)</b> — 지방근(GPTW), 천장현(머서코리아)</p>
+      <p style="margin-top:.4rem"><b>상임이사 (28)</b> — 권도희(영산대), 권지민(경기대), 김강호(한고원), 김동영(성결대), 김모란(UNIST), 김범성(선문대), 김상수(용인대), 김용재(동남보건대), 김정연(SnC), 김진희(대가대), 김태중(충남대), 김태형(한기대), 노태우(한양대), 양대천(중앙대), 옥지호(강원대), 원동환(덕성여대), 윤성두(경희대), 윤지환(고려대), 은준엽(고려대), 이석인(목포대), 이수열(전남대), 이순희(한국외대), 이정원(경기대), 이평수(경기대), 이후석(성균관대), 홍권표(건국대), 홍수희(신한대), 황재원(교통대)</p>
+      <p style="margin-top:.4rem"><b>이사 (38)</b> — 강태원(군산대), 강호정(배재대), 권일숙(한남대), 김민경(한국외대), 김소라(국립순천대), 김시진(대가대), 김정희(카관대), 김혜진(세종대), 김희경(청주대), 나경아(충북대), 박종석(대가대), 박현숙(SVU), 박혜수(건국대), 방일석(농협대), 방초희(호남대), 백서윤(원주대), 변현수(방통대), 송유리(호남대), 양성경(삼성전자), 양영수(한신대), 오수정(인하대), 오철진(충북대), 윤성환(계명대), 이윤상(대가대), 이제원(상지대), 이태섭(경성대), 이형석(충북대), 이형주(서울신학대), 전수현(계명대), 정연주(동의대), 정준이(백석예술대), 주규희(서울과기대), 채희선(국립부경대), 최돈승(국립경국대), 최세경(백석대), 홍계훈(청주대), 홍석기(단국대), 홍윤희(수원과학대)</p>
+    </div>
+  </details>
+</section>
+
+<!-- 14. V-3 평생회비/입연회비 -->
+<section class="slide has-rail" data-agenda="5">
+  <div class="eyebrow">AGENDA Ⅴ</div>
+  <h2 class="title">평생회비 및 입/연회비 납부 현황<small>2026.01.01. ~ 2026.06.09.</small></h2>
+  <div class="cards c3">
+    <div class="card"><div class="k">평생회비</div><div class="v">7<small>명</small></div></div>
+    <div class="card"><div class="k">일반회원 (입/연회비)</div><div class="v">32<small>명</small></div></div>
+    <div class="card gold"><div class="k">합계</div><div class="v">39<small>명</small></div></div>
+  </div>
+  <details open>
+    <summary>납부자 전체 명단 보기 (39명)</summary>
+    <div class="body">
+      <p><b>평생회비 (7)</b> — 권일숙(한남대), 김경현(계명대), 김정모(계명대), 김승철(국립순천대), 박상문(강원대), 손정민(충남대), 최우재(청주대)</p>
+      <p style="margin-top:.5rem"><b>일반회원 (32)</b> — 강민아(한기대), 곽동철(한남대), 권재범(해우광㈜), 김광태(인천대), 김승규(군산대), 김영화(건국대), 김예서(한양대), 김유진(한남대), 김영기(김영기법률사무소), 김정근(한양대), 김현재(건국대), 김형수(순천대), 문형수(한기대), 박상협(삼육대), 박진(건국대), 배장원(한기대), 서성민(산업연구원), 송영아(건국대), 송지훈(한양대), 왕언균(국민대), 유제완(KAIST), 이국성(국민대), 이동준(중앙대), 이은의(고려대), 이중원(동양대), 장욱희(경사노위), 정빛나(건국대), 진석호(청주대), 채봉주(한국외대), 채혜선(고려대), 최동호(금오공대), Shu Lin(국민대)</p>
+    </div>
+  </details>
+</section>
+
+<!-- 15. 마무리 -->
+<section class="slide cover">
+  <div class="frame">
+    <div class="org">한국기업경영학회 · KOCOMA</div>
+    <h1 class="big">감사합니다</h1>
+    <dl>
+      <dt>일&nbsp;&nbsp;&nbsp;시</dt><dd>2026년 6월 12일(금) 11:30 ~ 12:00</dd>
+      <dt>장&nbsp;&nbsp;&nbsp;소</dt><dd>건국대학교 경영관 304호</dd>
+      <dt>참&nbsp;&nbsp;&nbsp;석</dt><dd>한국기업경영학회 임원(이사회)</dd>
+    </dl>
+  </div>
+</section>
+
+<!-- 안건 레일 -->
+<nav class="rail" id="rail" aria-label="안건 바로가기">
+  <span data-a="1" data-go="2">Ⅰ</span>
+  <span data-a="2" data-go="4">Ⅱ</span>
+  <span data-a="3" data-go="7">Ⅲ</span>
+  <span data-a="4" data-go="10">Ⅳ</span>
+  <span data-a="5" data-go="12">Ⅴ</span>
+</nav>
+
+<div id="hud">
+  <div class="box">
+    <button id="prev" aria-label="이전 슬라이드">‹</button>
+    <span id="pageNum">1 / 16</span>
+    <button id="next" aria-label="다음 슬라이드">›</button>
+    <button id="home" aria-label="처음으로" title="처음으로" style="font-size:.8rem">⌂</button>
+    <button id="full" aria-label="전체화면" title="전체화면 (주소창 숨김)" style="font-size:.85rem">⛶</button>
+  </div>
+</div>
+
+</div><!-- /stage -->
+
+<script>
+const slides=[...document.querySelectorAll('.slide')];
+const rail=document.getElementById('rail');
+const railDots=[...rail.querySelectorAll('span')];
+let cur=0;
+function go(i){
+  cur=Math.max(0,Math.min(slides.length-1,i));
+  slides.forEach((s,k)=>s.classList.toggle('active',k===cur));
+  document.getElementById('pageNum').textContent=(cur+1)+' / '+slides.length;
+  document.getElementById('progress').style.width=((cur)/(slides.length-1)*100)+'%';
+  const a=slides[cur].dataset.agenda;
+  rail.style.display=a?'flex':'none';
+  railDots.forEach(d=>d.classList.toggle('on',d.dataset.a===a));
+  slides[cur].scrollTop=0;
+}
+document.getElementById('next').onclick=()=>go(cur+1);
+document.getElementById('prev').onclick=()=>go(cur-1);
+document.getElementById('home').onclick=()=>go(0);
+const stage=document.getElementById('stage');
+const fullBtn=document.getElementById('full');
+function toggleFull(){
+  const el=document.fullscreenElement||document.webkitFullscreenElement;
+  if(!el){
+    const req=stage.requestFullscreen||stage.webkitRequestFullscreen;
+    if(req) req.call(stage);
+  }else{
+    const exit=document.exitFullscreen||document.webkitExitFullscreen;
+    if(exit) exit.call(document);
+  }
+}
+fullBtn.onclick=toggleFull;
+function syncFullIcon(){
+  const on=document.fullscreenElement||document.webkitFullscreenElement;
+  fullBtn.textContent=on?'⤢':'⛶';
+  fullBtn.title=on?'전체화면 종료 (ESC)':'전체화면 (주소창 숨김)';
+}
+document.addEventListener('fullscreenchange',syncFullIcon);
+document.addEventListener('webkitfullscreenchange',syncFullIcon);
+document.addEventListener('keydown',e=>{
+  if(e.key==='ArrowRight'||e.key===' '||e.key==='PageDown'){e.preventDefault();go(cur+1);}
+  if(e.key==='ArrowLeft'||e.key==='PageUp'){e.preventDefault();go(cur-1);}
+  if(e.key==='Home')go(0);
+  if(e.key==='End')go(slides.length-1);
+  if(e.key==='f'||e.key==='F')toggleFull();
+});
+document.querySelectorAll('[data-go]').forEach(el=>{
+  el.addEventListener('click',()=>go(parseInt(el.dataset.go)));
+});
+/* 빈 영역 클릭 시 다음 슬라이드 (표·접기·링크 제외) */
+document.getElementById('stage').addEventListener('click',e=>{
+  if(e.target.closest('table,details,button,.toc,.rail,a'))return;
+  go(cur+1);
+});
+go(0);
+</script>
+</body>
+</html>
