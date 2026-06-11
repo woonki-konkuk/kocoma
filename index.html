@@ -26,6 +26,7 @@ body{
   background:#EDEFF4;color:var(--ink);
   display:flex;align-items:center;justify-content:center;
   overflow:hidden;
+  word-break:keep-all;
 }
 /* ---------- 무대 ---------- */
 #stage{
@@ -133,6 +134,23 @@ td.c{text-align:center}
 td.r{text-align:right;font-variant-numeric:tabular-nums}
 tr.total td{background:#FBF7EC;font-weight:700;border-top:2px solid var(--gold)}
 .tbl-tight td,.tbl-tight th{padding:.34rem .5rem;font-size:.8rem}
+/* 회계 수입·지출 표: 두 표 행 높이 통일 */
+.acct{width:100%}
+.acct th:first-child,.acct td:first-child{width:5.4rem}
+.acct thead th:last-child,.acct tbody td.r{width:6rem}
+.acct tbody tr{height:2.9rem}
+.acct tbody td,.acct tbody th{vertical-align:middle;padding-top:.2rem;padding-bottom:.2rem}
+/* 회계 하단 부가정보 (작은 텍스트) */
+.acct-foot{margin-top:1rem;font-size:.8rem;color:var(--gray);line-height:1.7}
+.acct-foot .line{margin-bottom:.15rem}
+.acct-foot b{color:var(--navy);font-weight:700;margin-right:.25rem}
+.acct-foot .sep{margin:0 .55rem;color:var(--line)}
+/* 학술대회 세부 일정 전용 압축 */
+.sched td,.sched th{padding:.2rem .5rem}
+.sched tbody td:first-child{white-space:nowrap;font-variant-numeric:tabular-nums}
+.sched .sub-spk{color:var(--gray);font-size:.92em}
+.sched .session-chips{gap:.28rem}
+.sched .schip{padding:.16rem .5rem;font-size:.78rem}
 
 /* ---------- 카드 ---------- */
 .cards{display:grid;gap: .9rem;margin: .4rem 0 1rem}
@@ -165,6 +183,14 @@ tr.total td{background:#FBF7EC;font-weight:700;border-top:2px solid var(--gold)}
 .cover dd{color:var(--ink)}
 .cover .hint{position:absolute;right:5.5%;bottom:5%;font-size:.8rem;color:var(--gray)}
 
+/* ---------- 인사말 ---------- */
+.greeting{max-width:54rem;margin-top:.4rem}
+.greeting .quote{font-size:1.55rem;font-weight:800;color:var(--navy);letter-spacing:-.02em;line-height:1.4;margin-bottom:1.4rem}
+.greeting .quote .ac{color:var(--gold)}
+.greeting p{font-size:1.02rem;line-height:1.85;color:var(--ink);margin-bottom:.9rem}
+.greeting .sign{margin-top:1.8rem;font-size:1.05rem;color:var(--gray);text-align:right}
+.greeting .sign b{color:var(--navy);font-weight:800;font-size:1.2rem;margin-left:.5rem;letter-spacing:.02em}
+
 /* ---------- 차례 ---------- */
 .toc{list-style:none;margin-top:.6rem}
 .toc li{
@@ -184,9 +210,10 @@ tr.total td{background:#FBF7EC;font-weight:700;border-top:2px solid var(--gold)}
 .mcell{border:1px solid var(--line);border-radius:6px;padding:.65rem .75rem;background:#fff}
 .mcell .m{font-size:.95rem;font-weight:800;color:var(--navy);border-bottom:1px solid var(--line);padding-bottom:.3rem;margin-bottom:.4rem}
 .mcell ul{list-style:none}
-.mcell li{font-size:.8rem;line-height:1.45;padding-left:.7rem;position:relative;margin-bottom:.2rem}
+.mcell li{font-size:.8rem;line-height:1.45;padding-left:.7rem;position:relative;margin-bottom:.2rem;word-break:keep-all;text-wrap:pretty}
 .mcell li::before{content:"";position:absolute;left:0;top:.55em;width:.28rem;height:.28rem;background:var(--gold);border-radius:50%}
 .mcell li.hl{font-weight:700;color:var(--navy)}
+.mcell li .d{display:block;font-weight:500;font-size:.92em;opacity:.72;margin-top:.05rem}
 
 /* ---------- 학술대회 ---------- */
 .conf-theme{
@@ -301,16 +328,25 @@ details .body b{color:var(--navy)}
   <div class="hint">⛶ 버튼(또는 F 키)으로 전체화면 · 방향키·클릭으로 이동</div>
 </section>
 
-<!-- 2. 차례 -->
+<!-- 2. 회장 인사말 -->
+<section class="slide cover">
+  <div class="frame">
+    <div class="org">한국기업경영학회 · KOCOMA</div>
+    <div class="lead-line">2026년도 춘계 이사회</div>
+    <h1 class="big">회장 인사말</h1>
+  </div>
+</section>
+
+<!-- 3. 차례 -->
 <section class="slide">
   <div class="eyebrow">CONTENTS</div>
   <h2 class="title">차례</h2>
   <ul class="toc">
-    <li data-go="2"><span class="no">Ⅰ</span><span class="t">상반기 경과보고 및 하반기 일정(안)</span><span class="pg">03–04</span></li>
-    <li data-go="4"><span class="no">Ⅱ</span><span class="t">학술대회 개최 개요</span><span class="pg">05–07</span></li>
-    <li data-go="7"><span class="no">Ⅲ</span><span class="t">편집위원회 운영 현황 보고</span><span class="pg">08–10</span></li>
-    <li data-go="10"><span class="no">Ⅳ</span><span class="t">2026년 벽소학술상 심사 결과</span><span class="pg">11–12</span></li>
-    <li data-go="12"><span class="no">Ⅴ</span><span class="t">임원 구성 및 회비 납부 현황</span><span class="pg">13–15</span></li>
+    <li data-go="3"><span class="no">Ⅰ</span><span class="t">상반기 경과보고 및 하반기 일정(안)</span><span class="pg">04–05</span></li>
+    <li data-go="5"><span class="no">Ⅱ</span><span class="t">학술대회 개최 개요</span><span class="pg">06–08</span></li>
+    <li data-go="8"><span class="no">Ⅲ</span><span class="t">편집위원회 운영 현황 보고</span><span class="pg">09–11</span></li>
+    <li data-go="11"><span class="no">Ⅳ</span><span class="t">2026년 벽소학술상 심사 결과</span><span class="pg">12–13</span></li>
+    <li data-go="13"><span class="no">Ⅴ</span><span class="t">임원 구성 및 회비 납부 현황</span><span class="pg">14–16</span></li>
   </ul>
 </section>
 
@@ -321,9 +357,9 @@ details .body b{color:var(--navy)}
   <span class="half-tag">상반기 · 완료 및 진행</span>
   <div class="month-grid">
     <div class="mcell"><div class="m">1월</div><ul>
-      <li>2026년 정기총회 개최 (1/26 12시, 삼정호텔)</li>
-      <li>2026년 운암학술상 시상 (정원준 숭실대 교수)</li>
-      <li>학회 인수인계 (임원·예산안·홈페이지 등)</li></ul></div>
+      <li>2026년 정기총회 개최<span class="d">1/26 12시, 삼정호텔</span></li>
+      <li>2026년 운암학술상 시상<span class="d">정원준 숭실대 교수</span></li>
+      <li>학회 인수인계<span class="d">임원·예산안·홈페이지 등</span></li></ul></div>
     <div class="mcell"><div class="m">2월</div><ul>
       <li>삼구아이앤씨 구자관 대표사원 예방 후 협력 논의</li>
       <li>「기업경영연구」 33권 1호 발간</li></ul></div>
@@ -332,13 +368,13 @@ details .body b{color:var(--navy)}
       <li>춘계학술대회 조직위원회 구성</li></ul></div>
     <div class="mcell"><div class="m">4월</div><ul>
       <li>「기업경영연구」 33권 2호 발간</li>
-      <li>제1차 분과위원장 회의 (4/24 18시)</li>
+      <li>제1차 분과위원장 회의<span class="d">4/24 18시</span></li>
       <li>2026년 벽소학술상 연구과제 선정</li></ul></div>
     <div class="mcell"><div class="m">5월</div><ul>
       <li>춘계학술대회 준비</li>
       <li>뉴스레터 2026년 5월호 발간</li></ul></div>
     <div class="mcell"><div class="m">6월</div><ul>
-      <li class="hl">춘계학술대회 개최 (6/12 금, 건국대 경영관)</li>
+      <li class="hl">춘계학술대회 개최<span class="d">6/12 금, 건국대 경영관</span></li>
       <li class="hl">이사회 및 총회 개최</li>
       <li>대표자 및 등기이사 변경</li>
       <li>「기업경영연구」 33권 3호 발간</li></ul></div>
@@ -364,7 +400,7 @@ details .body b{color:var(--navy)}
       <li>「기업경영연구」 33권 5호 발간</li>
       <li>추계학술대회 준비</li></ul></div>
     <div class="mcell"><div class="m">11월</div><ul>
-      <li class="hl">추계학술대회 개최 (11/6 금, 건국대 경영관)</li>
+      <li class="hl">추계학술대회 개최<span class="d">11/6 금, 건국대 경영관</span></li>
       <li class="hl">이사회 및 총회 개최</li>
       <li>2026년 벽소학술상 연구과제 시상</li>
       <li>뉴스레터 2026년 11월호 발간</li></ul></div>
@@ -425,14 +461,14 @@ details .body b{color:var(--navy)}
 <section class="slide has-rail" data-agenda="2">
   <div class="eyebrow">AGENDA Ⅱ</div>
   <h2 class="title">학술대회 세부 일정<small>2026.06.12.(금)</small></h2>
-  <table class="tbl-tight">
-    <thead><tr><th style="width:9rem">시간</th><th style="width:7rem">구분</th><th>내용</th><th style="width:9rem">진행</th></tr></thead>
+  <table class="tbl-tight sched">
+    <thead><tr><th style="width:6.2rem">시간</th><th style="width:6.5rem">구분</th><th>내용</th><th style="width:7.5rem">진행</th></tr></thead>
     <tbody>
       <tr><td class="c">11:30–12:00</td><th>이사회</th><td>한국기업경영학회 이사회 (304호)</td><td class="c">홍운기 운영위원장</td></tr>
       <tr><td class="c">12:00–13:20</td><th>등록</th><td>학회 참가 등록 / VIP 티타임</td><td class="c">–</td></tr>
       <tr><td class="c">13:20–13:50</td><th>개회식</th><td>개회사 · 인사말 · 축사</td><td class="c">홍운기 운영위원장</td></tr>
       <tr><td class="c">13:50–14:00</td><th>경영자 대상</th><td>강경성 KOTRA 사장<br>조세형 시앤피(C&amp;P)컨설팅그룹 대표</td><td class="c">류성민 심의위원장</td></tr>
-      <tr><td class="c">14:00–14:30</td><th>기조강연</th><td>노동시장과 노사관계 변화에 따른 기업의 대응 전략 (권기섭 석좌교수)</td><td class="c">–</td></tr>
+      <tr><td class="c">14:00–14:30</td><th>기조강연</th><td>노동시장과 노사관계 변화에 따른 기업의 대응 전략<br>권기섭 건국대 석좌교수 <span class="sub-spk">(前 경사노위 위원장 / 前 고용노동부 차관)</span></td><td class="c">–</td></tr>
       <tr><td class="c">14:50–16:30</td><th>학술세션 1</th><td>
         <div class="session-chips">
           <span class="schip">벽소학술상Ⅰ<span class="rm">101호</span></span>
@@ -525,7 +561,7 @@ details .body b{color:var(--navy)}
   <div class="two-col">
     <div>
       <h3 class="sub" style="margin-top:0">수입 내역</h3>
-      <table class="tbl-tight">
+      <table class="tbl-tight acct">
         <thead><tr><th>항목</th><th>내역</th><th>금액(원)</th></tr></thead>
         <tbody>
           <tr><th>기초이월</th><td>이월금 (3/1, 직전 편집위 인수액)</td><td class="r">22,047,721</td></tr>
@@ -538,7 +574,7 @@ details .body b{color:var(--navy)}
     </div>
     <div>
       <h3 class="sub" style="margin-top:0">지출 내역</h3>
-      <table class="tbl-tight">
+      <table class="tbl-tight acct">
         <thead><tr><th>항목</th><th>내역</th><th>금액(원)</th></tr></thead>
         <tbody>
           <tr><th>학술지 발간비</th><td>출판료</td><td class="r">3,822,000</td></tr>
@@ -550,10 +586,13 @@ details .body b{color:var(--navy)}
       </table>
     </div>
   </div>
-  <div class="info-row" style="margin-top:1.1rem">
-    <div class="info"><div class="k">계좌 잔액</div><div class="v">25,967,721원</div></div>
-    <div class="info"><div class="k">계좌</div><div class="v">경남은행 479-910029-38104 <span class="sub-muted">· 예금주 박진모</span></div></div>
-    <div class="info"><div class="k">비고</div><div class="v">기초이월은 3월 1일자에 직전 편집위원회로부터 인수받은 금액임</div></div>
+  <div class="acct-foot">
+    <div class="line">
+      <span><b>계좌 잔액</b> 25,967,721원</span>
+      <span class="sep">·</span>
+      <span><b>계좌</b> 경남은행 479-910029-38104 (예금주 박진모)</span>
+    </div>
+    <div class="line"><span><b>비고</b> 기초이월은 3월 1일자에 직전 편집위원회로부터 인수받은 금액임</span></div>
   </div>
 </section>
 
@@ -769,17 +808,17 @@ details .body b{color:var(--navy)}
 
 <!-- 안건 레일 -->
 <nav class="rail" id="rail" aria-label="안건 바로가기">
-  <span data-a="1" data-go="2">Ⅰ</span>
-  <span data-a="2" data-go="4">Ⅱ</span>
-  <span data-a="3" data-go="7">Ⅲ</span>
-  <span data-a="4" data-go="10">Ⅳ</span>
-  <span data-a="5" data-go="12">Ⅴ</span>
+  <span data-a="1" data-go="3">Ⅰ</span>
+  <span data-a="2" data-go="5">Ⅱ</span>
+  <span data-a="3" data-go="8">Ⅲ</span>
+  <span data-a="4" data-go="11">Ⅳ</span>
+  <span data-a="5" data-go="13">Ⅴ</span>
 </nav>
 
 <div id="hud">
   <div class="box">
     <button id="prev" aria-label="이전 슬라이드">‹</button>
-    <span id="pageNum">1 / 16</span>
+    <span id="pageNum">1 / 17</span>
     <button id="next" aria-label="다음 슬라이드">›</button>
     <button id="home" aria-label="처음으로" title="처음으로" style="font-size:.8rem">⌂</button>
     <button id="full" aria-label="전체화면" title="전체화면 (주소창 숨김)" style="font-size:.85rem">⛶</button>
