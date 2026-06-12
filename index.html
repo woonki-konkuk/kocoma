@@ -20,7 +20,7 @@
 html,body{height:100%}
 /* 글자 크기를 무대(16:9) 폭에 비례시킴 → 빔/노트북 어디서나 같은 비율 유지.
    무대 폭이 클수록(빔·큰 스크린) 글자도 함께 커지고, 하한 13px·상한 30px로 극단 방지. */
-html{font-size:clamp(13px, calc(min(96vw, 96vh * 1.3333) / 60), 32px);}
+html{font-size:clamp(14px, calc(min(96vw, 96vh * 1.7778) / 64), 34px);}
 body{
   font-family:"Pretendard Variable",Pretendard,-apple-system,BlinkMacSystemFont,"Malgun Gothic","Apple SD Gothic Neo",sans-serif;
   background:#EDEFF4;color:var(--ink);
@@ -31,8 +31,8 @@ body{
 /* ---------- 무대 ---------- */
 #stage{
   position:relative;
-  width:min(96vw, calc(96vh * 4 / 3));
-  aspect-ratio:4/3;
+  width:min(96vw, calc(96vh * 16 / 9));
+  aspect-ratio:16/9;
   background:var(--bg);
   box-shadow:0 12px 48px rgba(14,26,74,.18);
   border-radius:10px;
@@ -43,13 +43,13 @@ body{
   width:100vw;height:100vh;max-width:none;
   aspect-ratio:auto;border-radius:0;box-shadow:none;background:#000;
   display:flex;align-items:center;justify-content:center;
-  font-size:clamp(13px, calc(min(100vw, 100vh * 1.3333) / 60), 36px);
+  font-size:clamp(14px, calc(min(100vw, 100vh * 1.7778) / 64), 40px);
 }
 /* 전체화면에선 슬라이드를 화면 한가운데 16:9로 최대화 (PPT 발표 화면과 동일) */
 #stage:fullscreen .slide,#stage:-webkit-full-screen .slide{
   position:relative;inset:auto;margin:auto;
-  width:min(100vw, calc(100vh * 4 / 3));
-  height:min(100vh, calc(100vw * 3 / 4));
+  width:min(100vw, calc(100vh * 16 / 9));
+  height:min(100vh, calc(100vw * 9 / 16));
 }
 .slide{
   position:absolute;inset:0;
@@ -146,11 +146,14 @@ tr.total td{background:#FBF7EC;font-weight:700;border-top:2px solid var(--gold)}
 .acct-foot b{color:var(--navy);font-weight:700;margin-right:.25rem}
 .acct-foot .sep{margin:0 .55rem;color:var(--line)}
 /* 학술대회 세부 일정 전용 압축 */
-.sched td,.sched th{padding:.2rem .5rem}
+.sched td,.sched th{padding:.12rem .5rem}
 .sched tbody td:first-child{white-space:nowrap;font-variant-numeric:tabular-nums}
 .sched .sub-spk{color:var(--gray);font-size:.92em}
-.sched .session-chips{gap:.28rem}
-.sched .schip{padding:.16rem .5rem;font-size:.78rem}
+.sched .session-chips{gap:.22rem}
+.sched .schip{padding:.12rem .5rem;font-size:.78rem}
+/* 표가 빽빽한 슬라이드 수직 압축 */
+.compact-v h3.sub{margin:.6rem 0 .35rem}
+.compact-v .cards{margin:.25rem 0 .6rem}
 
 /* ---------- 카드 ---------- */
 .cards{display:grid;gap: .9rem;margin: .4rem 0 1rem}
@@ -529,7 +532,7 @@ details .body b{color:var(--navy)}
 </section>
 
 <!-- 8. III-2 논문 게재 현황 -->
-<section class="slide has-rail" data-agenda="3">
+<section class="slide has-rail compact-v" data-agenda="3">
   <div class="eyebrow">AGENDA Ⅲ</div>
   <h2 class="title">논문 게재 현황<small>2026.01.01. ~ 2026.05.31.</small></h2>
   <div class="cards c3">
